@@ -37,37 +37,37 @@ const LoginPage = () => {
   });
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+      <div className="mx-auto flex w-10/12 flex-col overflow-hidden rounded-xl bg-white shadow-lg lg:w-8/12 lg:flex-row">
         <div
-          className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
+          className="flex w-full flex-col items-center justify-center bg-cover bg-center bg-no-repeat p-12 lg:w-1/2"
           style={{
             backgroundImage: `url(${background})`,
             width: "480px",
           }}
         >
-          <div className="flex flex-col items-center justify-center h-full p-8">
+          <div className="flex h-full flex-col items-center justify-center p-8">
             <div className="flex items-center p-4">
-              <img src={logo} alt="Arena Logo" className="h-7 w-auto mr-0" />
-              <img src={arena} alt="Arena" className="h-7 w-auto mr-2" />
-              <div className="h-8 border-l border-white mx-2"></div>
-              <h2 className="text-white text-sm">Area Owner Dashboard</h2>
+              <img src={logo} alt="Arena Logo" className="mr-0 h-7 w-auto" />
+              <img src={arena} alt="Arena" className="mr-2 h-7 w-auto" />
+              <div className="mx-2 h-8 border-l border-white"></div>
+              <h2 className="text-sm text-white">Area Owner Dashboard</h2>
             </div>
 
             <br />
             <br />
-            <h1 className="text-white text-3xl font-bold ">MANAGE GROUNDS</h1>
+            <h1 className="text-3xl font-bold text-white">MANAGE GROUNDS</h1>
             <br />
 
-            <h2 className="text-lime-400 text-3xl font-bold ">EASILY</h2>
+            <h2 className="text-3xl font-bold text-lime-400">EASILY</h2>
           </div>
         </div>
         <div
-          className="w-full lg:w-1/2 py-16 px-12 "
+          className="w-full px-12 py-16 lg:w-1/2"
           style={{ width: "430px" }}
         >
-          <h2 className="text-3xl mb-4 text-center font-bold">Welcome Back!</h2>
+          <h2 className="mb-4 text-center text-3xl font-bold">Welcome Back!</h2>
           <p className="mb-4 text-center">Please enter your details.</p>
-          <form className="space-y-6 " onSubmit={onSubmit}>
+          <form className="space-y-6" onSubmit={onSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -78,7 +78,7 @@ const LoginPage = () => {
               <input
                 type="email"
                 id="email"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 {...register("email", { required: "This field is required" })}
               />
               {errors.email && (
@@ -95,7 +95,7 @@ const LoginPage = () => {
               <input
                 type="password"
                 id="password"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 {...register("password", {
                   required: "This field is required",
                   minLength: {
@@ -114,7 +114,7 @@ const LoginPage = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 <label
                   htmlFor="remember-me"
@@ -135,7 +135,7 @@ const LoginPage = () => {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-800"
+                className="flex w-full justify-center rounded-md border border-transparent bg-green-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-offset-2"
               >
                 Sign in
               </button>
@@ -143,10 +143,10 @@ const LoginPage = () => {
             <div>
               <button
                 type="button"
-                className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <svg
-                  className="h-5 w-5 mr-2"
+                  className="mr-2 h-5 w-5"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 48 48"
                 >
@@ -173,7 +173,7 @@ const LoginPage = () => {
             </div>
           </form>
           <div className="mt-6">
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-center text-sm text-gray-600">
               Don't have an account?{" "}
               <Link
                 to="/registertype"

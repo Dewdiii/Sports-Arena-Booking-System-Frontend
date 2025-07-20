@@ -3,157 +3,37 @@ import { Button } from "@/components/ui/button";
 import { TableHead, TableRow, TableCell } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 
-const sampleData = [
-  {
-    id: 1,
-    user: "John Doe",
-    date: "2023-07-21",
-    time: "10:30 AM",
-    duration: "30 mins",
-  },
-  {
-    id: 2,
-    user: "Jane Smith",
-    date: "2023-07-20",
-    time: "2:15 PM",
-    duration: "45 mins",
-  },
-  {
-    id: 3,
-    user: "Bob Johnson",
-    date: "2023-07-19",
-    time: "9:00 AM",
-    duration: "1 hour",
-  },
-  {
-    id: 4,
-    user: "Alice Williams",
-    date: "2023-07-18",
-    time: "4:45 PM",
-    duration: "15 mins",
-  },
-  {
-    id: 5,
-    user: "Tom Davis",
-    date: "2023-07-17",
-    time: "11:20 AM",
-    duration: "1 hour 10 mins",
-  },
-  {
-    id: 6,
-    user: "Emma Brown",
-    date: "2023-07-16",
-    time: "1:00 PM",
-    duration: "20 mins",
-  },
-  {
-    id: 7,
-    user: "Lucas Green",
-    date: "2023-07-15",
-    time: "3:30 PM",
-    duration: "25 mins",
-  },
-  {
-    id: 8,
-    user: "Liam White",
-    date: "2023-07-14",
-    time: "8:45 AM",
-    duration: "40 mins",
-  },
-  {
-    id: 9,
-    user: "Sophia Harris",
-    date: "2023-07-13",
-    time: "10:15 AM",
-    duration: "35 mins",
-  },
-  {
-    id: 10,
-    user: "Mason Clark",
-    date: "2023-07-12",
-    time: "12:00 PM",
-    duration: "1 hour 20 mins",
-  },
-  {
-    id: 11,
-    user: "Olivia Lewis",
-    date: "2023-07-11",
-    time: "9:30 AM",
-    duration: "50 mins",
-  },
-  {
-    id: 12,
-    user: "Ethan Walker",
-    date: "2023-07-10",
-    time: "2:00 PM",
-    duration: "55 mins",
-  },
-  {
-    id: 13,
-    user: "Ava Hall",
-    date: "2023-07-09",
-    time: "11:45 AM",
-    duration: "30 mins",
-  },
-  {
-    id: 14,
-    user: "Noah Young",
-    date: "2023-07-08",
-    time: "4:00 PM",
-    duration: "45 mins",
-  },
-  {
-    id: 15,
-    user: "Isabella King",
-    date: "2023-07-07",
-    time: "10:00 AM",
-    duration: "1 hour 5 mins",
-  },
-  {
-    id: 16,
-    user: "William Wright",
-    date: "2023-07-06",
-    time: "3:00 PM",
-    duration: "25 mins",
-  },
-  {
-    id: 17,
-    user: "Mia Scott",
-    date: "2023-07-05",
-    time: "5:15 PM",
-    duration: "35 mins",
-  },
-  {
-    id: 18,
-    user: "James Turner",
-    date: "2023-07-04",
-    time: "1:30 PM",
-    duration: "40 mins",
-  },
-  {
-    id: 19,
-    user: "Charlotte Moore",
-    date: "2023-07-03",
-    time: "8:00 AM",
-    duration: "50 mins",
-  },
-  {
-    id: 20,
-    user: "Benjamin Harris",
-    date: "2023-07-02",
-    time: "6:45 PM",
-    duration: "30 mins",
-  },
-];
+type Arena = {
+  _id: string;
+  name: string;
+  city: string;
+  address: string;
+  location: string;
+  lastUpdated: string;
+  [key: string]: any;
+};
 
 export default function AdminDashboardTable() {
-  const [currentData, setCurrentData] = useState(sampleData.slice(0, 5)); // Initial data
+  const [arenas, setArenas] = useState<Arena[]>([]);
   const [currentChunk, setCurrentChunk] = useState(0);
-  const [data] = useState(sampleData); // Complete data set
+  const [currentData, setCurrentData] = useState<Arena[]>([]);
 
   useEffect(() => {
-    setCurrentData(data.slice(currentChunk * 5, currentChunk * 5 + 5));
-  }, [currentChunk, data]);
+    async function fetchArenas() {
+      try {
+        const res = await fetch("http://localhost:7000/api/my-arenas");
+        const data = await res.json();
+        setArenas(data);
+      } catch (err) {
+        setArenas([]);
+      }
+    }
+    fetchArenas();
+  }, []);
+
+  useEffect(() => {
+    setCurrentData(arenas.slice(currentChunk * 5, currentChunk * 5 + 5));
+  }, [currentChunk, arenas]);
 
   const handlePrevious = () => {
     if (currentChunk > 0) {
@@ -162,13 +42,13 @@ export default function AdminDashboardTable() {
   };
 
   const handleNext = () => {
-    if ((currentChunk + 1) * 5 < data.length) {
+    if ((currentChunk + 1) * 5 < arenas.length) {
       setCurrentChunk(currentChunk + 1);
     }
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       <div className="flex flex-row">
         <img
           src="src/assets/barchart.png"
@@ -186,8 +66,8 @@ export default function AdminDashboardTable() {
         <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
           <div className="ml-4 mt-4">
             <span>
-              <h3 className="text-bold text-xl">Bookings</h3>
-              <p>Court 1</p>
+              <h3 className="text-bold text-xl">Arenas</h3>
+              <p>My Arenas</p>
             </span>
           </div>
           {/* <div className="ml-4 mt-4 flex-shrink-0">
@@ -199,30 +79,42 @@ export default function AdminDashboardTable() {
         </div>
       </div>
       <div className="flex-1 overflow-auto">
-        <table className="w-full border-collapse table-auto">
+        <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="bg-muted">
               <TableHead className="w-[32px]">
                 <Checkbox id="select-all" />
               </TableHead>
-              <TableHead>ID</TableHead>
-              <TableHead>User</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Time</TableHead>
-              <TableHead>Duration</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>City</TableHead>
+              <TableHead>Address</TableHead>
+              <TableHead>Location</TableHead>
+              <TableHead>Last Updated</TableHead>
             </tr>
           </thead>
           <tbody>
-            {currentData.map((entry) => (
-              <TableRow key={entry.id}>
+            {currentData.map((arena) => (
+              <TableRow key={arena._id}>
                 <TableCell>
-                  <Checkbox id={`select-${entry.id}`} />
+                  <Checkbox id={`select-${arena._id}`} />
                 </TableCell>
-                <TableCell className="font-medium">{entry.id}</TableCell>
-                <TableCell>{entry.user}</TableCell>
-                <TableCell>{entry.date}</TableCell>
-                <TableCell>{entry.time}</TableCell>
-                <TableCell>{entry.duration}</TableCell>
+                <TableCell className="font-medium">
+                  {arena.name ? arena.name.replace(/"/g, "") : ""}
+                </TableCell>
+                <TableCell>
+                  {arena.city ? arena.city.replace(/"/g, "") : ""}
+                </TableCell>
+                <TableCell>
+                  {arena.address ? arena.address.replace(/"/g, "") : ""}
+                </TableCell>
+                <TableCell>
+                  {arena.location ? arena.location.replace(/"/g, "") : ""}
+                </TableCell>
+                <TableCell>
+                  {arena.lastUpdated
+                    ? new Date(arena.lastUpdated).toLocaleString()
+                    : ""}
+                </TableCell>
               </TableRow>
             ))}
           </tbody>
@@ -231,9 +123,10 @@ export default function AdminDashboardTable() {
       <div className="border-t border-muted-foreground/20 px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
-            Showing <strong>{currentChunk * 5 + 1}</strong> to{" "}
-            <strong>{Math.min((currentChunk + 1) * 5, data.length)}</strong> of{" "}
-            <strong>{data.length}</strong> results
+            Showing{" "}
+            <strong>{arenas.length === 0 ? 0 : currentChunk * 5 + 1}</strong> to{" "}
+            <strong>{Math.min((currentChunk + 1) * 5, arenas.length)}</strong>{" "}
+            of <strong>{arenas.length}</strong> results
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="icon" onClick={handlePrevious}>
@@ -249,7 +142,8 @@ export default function AdminDashboardTable() {
   );
 }
 
-function ChevronLeftIcon(props) {
+// ChevronLeftIcon
+function ChevronLeftIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -268,7 +162,8 @@ function ChevronLeftIcon(props) {
   );
 }
 
-function ChevronRightIcon(props) {
+// ChevronRightIcon
+function ChevronRightIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -287,7 +182,8 @@ function ChevronRightIcon(props) {
   );
 }
 
-function DownloadIcon(props) {
+// DownloadIcon
+function DownloadIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -308,7 +204,8 @@ function DownloadIcon(props) {
   );
 }
 
-function XIcon(props) {
+// XIcon
+function XIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

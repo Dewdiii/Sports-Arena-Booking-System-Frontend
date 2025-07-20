@@ -14,13 +14,45 @@ const AddGround: React.FC = () => {
   const [city, setCity] = useState("");
   const [location, setLocation] = useState<[number, number] | null>(null);
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!location) {
       alert("Please select a location on the map.");
       return;
     }
-    // Handle the create action
-    console.log("Ground created:", { name, street, city, location });
+    const now = new Date().toISOString();
+    const userId = "687a29d5b86718cc4edc01c8"; // Replace with actual userId if available
+    const reqBody = {
+      name: name,
+      city: city,
+      address: street,
+      location: `${location[0]}, ${location[1]}`,
+      imageUrls: [],
+      lastUpdated: now,
+      userId: userId,
+      courts: [],
+      createdAt: now,
+      updatedAt: now,
+    };
+    try {
+      const response = await fetch("http://localhost:7000/api/my-arenas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create ground");
+      }
+      alert("Ground created successfully!");
+      // Optionally reset form or redirect
+      setName("");
+      setStreet("");
+      setCity("");
+      setLocation(null);
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
   };
 
   const handleCancel = () => {
@@ -46,8 +78,8 @@ const AddGround: React.FC = () => {
   }
 
   return (
-    <div className="p-8 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
-      <h2 className="text-2xl font-bold text-teal-900 mb-4">Add Ground</h2>
+    <div className="mx-auto max-w-md space-y-4 rounded-xl bg-white p-8 shadow-md">
+      <h2 className="mb-4 text-2xl font-bold text-teal-900">Add Ground</h2>
       <div>
         <label className="block text-sm font-medium text-gray-700">
           Name of the Ground
@@ -57,7 +89,7 @@ const AddGround: React.FC = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name of the Ground"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm"
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -70,7 +102,7 @@ const AddGround: React.FC = () => {
             value={street}
             onChange={(e) => setStreet(e.target.value)}
             placeholder="Street Address"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm"
           />
         </div>
         <div>
@@ -82,12 +114,12 @@ const AddGround: React.FC = () => {
             value={city}
             onChange={(e) => setCity(e.target.value)}
             placeholder="City"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm"
           />
         </div>
       </div>
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="mb-2 block text-sm font-medium text-gray-700">
           Location
         </label>
         <MapContainer
@@ -106,13 +138,13 @@ const AddGround: React.FC = () => {
       <div className="flex justify-end space-x-4">
         <button
           onClick={handleCancel}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+          className="rounded-md bg-gray-300 px-4 py-2 text-gray-700"
         >
           Cancel
         </button>
         <button
           onClick={handleCreate}
-          className="px-4 py-2 bg-teal-900 text-white rounded-md"
+          className="rounded-md bg-teal-900 px-4 py-2 text-white"
         >
           Create
         </button>

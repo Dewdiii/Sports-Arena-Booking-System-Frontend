@@ -17,15 +17,15 @@ const categories = [
 const SportsList: React.FC = () => {
   return (
     <div className="ml-auto mr-12">
-      <h2 className="text-xl mb-4 font-bold text-teal-900 ">
+      <h2 className="mb-4 text-xl font-bold text-teal-900">
         Explore by Sports
       </h2>
-      <div className="flex flex-wrap gap-5 mb-4">
+      <div className="mb-4 flex flex-wrap gap-5">
         {categories.map((category) => (
-          <Link to="/login">
+          <Link to="/">
             <button
               key={category}
-              className="px-5 py-2 font-bold bg-white border border-teal-900 text-teal-900 rounded-full hover:bg-teal-900 hover:text-white text-sm"
+              className="rounded-full border border-teal-900 bg-white px-5 py-2 text-sm font-bold text-teal-900 hover:bg-teal-900 hover:text-white"
             >
               {category}
             </button>

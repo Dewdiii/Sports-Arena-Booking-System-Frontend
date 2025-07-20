@@ -6,33 +6,33 @@ import arena from "../assets/Arena.png";
 const Header = () => {
   //const { isLoggedIn } = useAppContext();
   return (
-    <nav className="flex items-center justify-between p-4 bg-gray-800">
-      <Link to="/" className="flex items-center mr-12">
-        <img src={logo} alt="Arena Logo" className="h-10 w-auto mr-0" />
-        <img src={arena} alt="Arena" className="h-10 w-auto mr-2" />
+    <nav className="flex items-center justify-between bg-gray-800 p-4">
+      <Link to="/" className="mr-12 flex items-center">
+        <img src={logo} alt="Arena Logo" className="mr-0 h-10 w-auto" />
+        <img src={arena} alt="Arena" className="mr-2 h-10 w-auto" />
       </Link>
-      <div className="flex space-x-20 mr-auto">
-        <Link to="/explore" className="text-white transition duration-350">
-          EXPLORE
+      <div className="mr-auto flex space-x-20">
+        <Link to="/booking" className="duration-350 text-white transition">
+          MY BOOKINGS
         </Link>
-        <Link to="/about-us" className="text-white transition duration-300">
-          ABOUT US
+        <Link to="/dashboard" className="text-white transition duration-300">
+          ARENAS
         </Link>
         <Link to="/help" className="text-white transition duration-300">
           HELP
         </Link>
       </div>
-      <div className="flex space-x-4 ml-4">
+      <div className="ml-4 flex space-x-4">
         <Link
           to="/login"
-          className="flex items-center border text-sm border-lime-500 bg-gray-800 text-lime-500 px-4 py-2 font-bold rounded-full hover:bg-lime-500  hover:text-black transition duration-300"
+          className="flex items-center rounded-full border border-lime-500 bg-gray-800 px-4 py-2 text-sm font-bold text-lime-500 transition duration-300 hover:bg-lime-500 hover:text-black"
         >
           Login
         </Link>
 
         <Link
           to="/registertype"
-          className="flex items-center border text-sm border-lime-500 bg-gray-800 text-lime-500 px-4 py-2 font-bold rounded-full hover:bg-lime-500  hover:text-black transition duration-300"
+          className="flex items-center rounded-full border border-lime-500 bg-gray-800 px-4 py-2 text-sm font-bold text-lime-500 transition duration-300 hover:bg-lime-500 hover:text-black"
         >
           Sign Up
         </Link>
